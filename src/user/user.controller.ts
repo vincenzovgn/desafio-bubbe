@@ -18,6 +18,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { IdParams } from './dto/id-params.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('users')
 export class UserController {
@@ -37,6 +38,7 @@ export class UserController {
     }
   }
 
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Get()
   async findAll() {
@@ -48,6 +50,7 @@ export class UserController {
     }
   }
 
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Get(':id')
   async findOne(@Param() params: IdParams) {
@@ -62,6 +65,7 @@ export class UserController {
     }
   }
 
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Patch(':id')
   async update(@Param() params: IdParams, @Body() updateUserDto: UpdateUserDto) {
@@ -72,6 +76,7 @@ export class UserController {
     return true;
   }
 
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Delete(':id')
   async remove(@Param() params: IdParams) {
