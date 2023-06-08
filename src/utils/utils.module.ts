@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { Encripter } from './encrypter';
+import { Encrypter } from './encrypter';
 
 @Module({
-  providers: [Encripter],
-  exports: [Encripter],
+  providers: [Encrypter],
+  exports: [Encrypter],
 })
 export class Utils {}

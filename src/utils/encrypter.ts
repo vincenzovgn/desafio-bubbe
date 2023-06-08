@@ -3,7 +3,7 @@ import * as bcrypt from 'bcrypt';
 const SALT = 15;
 
 @Injectable()
-export class Encripter {
+export class Encrypter {
   async encrypt(data: string | Buffer): Promise<string> {
     return bcrypt.hash(data, SALT);
   }
