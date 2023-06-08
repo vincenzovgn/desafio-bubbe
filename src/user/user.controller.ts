@@ -11,16 +11,21 @@ import {
   NotFoundException,
   ClassSerializerInterceptor,
   UseInterceptors,
+  HttpCode,
+  HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { IdParams } from './dto/id-params.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @HttpCode(HttpStatus.CREATED)
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     try {
@@ -29,10 +34,12 @@ export class UserController {
       }
       await this.userService.create(createUserDto);
     } catch (error) {
+      console.log(JSON.stringify(error));
       return new InternalServerErrorException();
     }
   }
 
+  @UseGuards(AuthGuard)
   @Get()
   async findAll() {
     try {
@@ -43,6 +50,7 @@ export class UserController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   async findOne(@Param() params: IdParams) {
     try {
@@ -56,6 +64,7 @@ export class UserController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
   async update(@Param() params: IdParams, @Body() updateUserDto: UpdateUserDto) {
     const resource = await this.userService.update(params.id, updateUserDto);
@@ -65,6 +74,7 @@ export class UserController {
     return true;
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   async remove(@Param() params: IdParams) {
     const resource = await this.userService.remove(params.id);
