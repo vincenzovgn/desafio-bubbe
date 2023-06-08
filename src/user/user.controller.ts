@@ -9,8 +9,6 @@ import {
   BadRequestException,
   InternalServerErrorException,
   NotFoundException,
-  ClassSerializerInterceptor,
-  UseInterceptors,
   HttpCode,
   HttpStatus,
   UseGuards,
